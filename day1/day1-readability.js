@@ -1,10 +1,11 @@
 const fs = require('fs');
 
 //helpers
-const readFileOfNumbers = fs
-  .readFileSync('input.txt', 'utf8')
-  .split('\n')
-  .map((string) => parseInt(string));
+const readFileOfNumbers = (path) =>
+  fs
+    .readFileSync(path, 'utf8')
+    .split('\n')
+    .map((string) => parseInt(string));
 
 const toSum = (current, sum) => current + sum;
 
@@ -26,15 +27,17 @@ const toIncreaseCount = (count, current, index, array) => {
 };
 
 //solution
-const input = readFileOfNumbers;
+const input = readFileOfNumbers('input.txt');
 
 const increaseCount = input.reduce(toIncreaseCount, 0);
 console.log(
   `Part 1: How many measurements are larger than the previous measurement?  ${increaseCount}`,
 );
 
-const increaseCountSummed = input
+const increaseCountOfSummedWindows = input
   .map(toSumsOf(3))
   .filter(removeUndefined)
   .reduce(toIncreaseCount, 0);
-console.log(`Part 2: How many sums are larger than the previous sum? ${increaseCountSummed}`);
+console.log(
+  `Part 2: How many sums are larger than the previous sum? ${increaseCountOfSummedWindows}`,
+);
